@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("updated_at")
+  updatedAt DateTime @updatedAt @map("created_at")
+  name      String
+  email     String   @unique
+  snack     String
+}
+
+model Snack {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("updated_at")
+  updatedAt DateTime @updatedAt @map("created_at")
+  snack     String
+  day       Day
+}
+
+enum Day {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+}
