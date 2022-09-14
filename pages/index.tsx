@@ -20,10 +20,10 @@ const fetcher = async (u: string) => await fetch(u).then((res) => res.json());
 
 export default function Home() {
     const { data: session } = useSession();
-    const { data: allData, isLoading } = useQuery(
-        ["allData"],
-        async () => await fetcher("https://server.devomkar.com/allData")
-    );
+    // const { data: allData, isLoading } = useQuery(
+    //     ["allData"],
+    //     async () => await fetcher("https://server.devomkar.com/allData")
+    // );
 
     if (!session) {
         return (
@@ -44,7 +44,7 @@ export default function Home() {
                     >
                         Sign in
                     </Button>
-                    <BasicStatistics isLoading={isLoading} />
+                    <BasicStatistics />
                 </Flex>
             </>
         );
@@ -64,29 +64,25 @@ export default function Home() {
                             pathname: "./account",
                         }}
                     >
-                        <Button
-                            variant="outline"
-                            colorScheme="teal"
-                            disabled={isLoading}
-                        >
+                        <Button variant="outline" colorScheme="teal">
                             My Account
                         </Button>
                     </Link>
                 </HStack>
-                <BasicStatistics isLoading={isLoading} />
+                <BasicStatistics />
             </Flex>
         );
     }
 }
-export async function getStaticProps(context) {
-    await client.prefetchQuery(
-        ["allData"],
-        async () => await fetcher("https://server.devomkar.com/allData")
-    );
-    return {
-        revalidate: 30,
-        props: {
-            dehydratedState: dehydrate(client),
-        },
-    };
-}
+// export async function getStaticProps(context) {
+//     await client.prefetchQuery(
+//         ["allData"],
+//         async () => await fetcher("https://server.devomkar.com/allData")
+//     );
+//     return {
+//         revalidate: 30,
+//         props: {
+//             dehydratedState: dehydrate(client),
+//         },
+//     };
+// }

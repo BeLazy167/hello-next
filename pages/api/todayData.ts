@@ -10,6 +10,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 },
             },
         });
+        prisma.$disconnect();
+
         res.json(todayData);
     }
 };

@@ -20,11 +20,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                     snack: snack,
                 },
             });
+            prisma.$disconnect();
+
             res.json(finalData);
         } else {
             const finalData = await prisma.snack.create({
                 data: snackData,
             });
+            prisma.$disconnect();
+
             res.json(finalData);
         }
     }

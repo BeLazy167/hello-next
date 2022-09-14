@@ -12,6 +12,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 day: dayName as unknown as Day,
             },
         });
+        prisma.$disconnect();
         res.json(snackData.snack);
     }
 };
