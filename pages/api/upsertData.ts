@@ -4,6 +4,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
         const userData = req.body;
         const { name, email, snack } = userData;
+        console.log(`${name} just submitted the form!`);
         const findFirst = await prisma.user.findFirst({
             where: {
                 AND: [

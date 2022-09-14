@@ -6,10 +6,13 @@ import {
     FormHelperText,
     FormLabel,
     Input,
+    Radio,
+    RadioGroup,
+    Stack,
     Toast,
     VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
 import { useSession, signOut, getSession } from "next-auth/react";
@@ -43,53 +46,81 @@ async function todayData() {
 
     return await res.json();
 }
+async function getDaySnack() {
+    const res = await fetch("/api/daySnack");
+    if (!res.ok) {
+        throw new Error("Failed to get data");
+    }
+
+    return await res.json();
+}
 
 export default function Page1() {
+    const { data: getDaySnackData } = useQuery(["daySnack"], getDaySnack);
     const { data: allData } = useQuery(["allDataAnother"], getallData);
     const { data: todayDataRes } = useQuery(["todayData"], todayData);
     const { data: session, status } = useSession({ required: true });
+
     const [data, setData] = useState({
-        name: "",
-        email: "",
+        name: session?.user?.name,
+        email: session?.user?.email,
         snack: "",
     });
-    const [resData, setresData] = useState();
 
-    const handleChange = (e: any) => {
-        setData({ ...data, [e.target.name]: e.target.value });
-    };
+    useEffect(() => {
+        setData({
+            ...data,
+            name: session?.user?.name,
+            email: session?.user?.email,
+        });
+    }, [session]);
+
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        mutate(data);
+        if (data.snack === "") {
+            alert("Please select a snack");
+            return;
+        } else {
+            mutate(data);
+        }
+    };
+    const handleRadioChange = (e: any) => {
+        setData({ ...data, snack: e });
     };
 
-    const { mutate } = useMutation(upsertData, {
+    const { mutate, isLoading } = useMutation(upsertData, {
         onSuccess: (data) => {
-            Toast({
-                title: "Data added",
-                description: "Data added successfully",
-                status: "success",
-                duration: 9000,
-                isClosable: true,
-            });
+            console.log(data);
         },
     });
-
+    const renderOptions = () => {
+        return (
+            <Stack direction="row">
+                {getDaySnackData?.map((item: any, index: number) => (
+                    <Radio name="snack" key={index} value={item}>
+                        {item}
+                    </Radio>
+                ))}
+            </Stack>
+        );
+    };
+    console.log(data);
     return (
         <Center w="50%" mx="auto" mt={10}>
             <FormControl>
-                <FormLabel>Email address</FormLabel>
-                <Input name="email" type="email" onChange={handleChange} />
-                <FormHelperText>We'll never share your email.</FormHelperText>
-                <FormLabel>Name</FormLabel>
-                <Input name="name" onChange={handleChange} />
-                <FormLabel>Snack</FormLabel>
-                <Input name="snack" onChange={handleChange} />
-
                 <Center mt={5}>
-                    <Button onClick={handleSubmit}>Submit</Button>
+                    <VStack>
+                        <RadioGroup
+                            onChange={(e) => handleRadioChange(e)}
+                            value={data.snack}
+                        >
+                            {getDaySnackData && renderOptions()}
+                        </RadioGroup>
+                        <Button disabled={isLoading} onClick={handleSubmit}>
+                            Submit
+                        </Button>
+                    </VStack>
                 </Center>
-                <h1>Todays Data Count : {todayDataRes?.length}</h1>
             </FormControl>
         </Center>
     );
