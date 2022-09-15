@@ -1,30 +1,19 @@
 import Link from "../node_modules/next/link";
-import {
-    Flex,
-    Heading,
-    Input,
-    Button,
-    Text,
-    useColorMode,
-    useColorModeValue,
-    HStack,
-    Highlight,
-} from "@chakra-ui/react";
-import react from "react";
+import { Flex, Heading, Button, Text, HStack } from "@chakra-ui/react";
 import client from "./react-query-client";
 import { useQuery, dehydrate } from "@tanstack/react-query";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import BasicStatistics from "./stats";
-import { userAgent } from "next/server";
+
 const fetcher = async (u: string) => await fetch(u).then((res) => res.json());
 
 export default function Home() {
     const { data: session } = useSession();
-    // const { data: allData, isLoading } = useQuery(
-    //     ["allData"],
-    //     async () => await fetcher("https://server.devomkar.com/allData")
-    // );
-
+    const { data: allData, isLoading } = useQuery(
+        ["allData"],
+        async () => await fetcher("/api/allData")
+    );
+    const datax = client.getQueryData(["allData"]);
     if (!session) {
         return (
             <>
@@ -44,7 +33,7 @@ export default function Home() {
                     >
                         Sign in
                     </Button>
-                    <BasicStatistics />
+                    <BasicStatistics isLoading={isLoading} />
                 </Flex>
             </>
         );
@@ -64,25 +53,30 @@ export default function Home() {
                             pathname: "./account",
                         }}
                     >
-                        <Button variant="outline" colorScheme="teal">
+                        <Button
+                            variant="outline"
+                            colorScheme="teal"
+                            disabled={isLoading}
+                        >
                             My Account
                         </Button>
                     </Link>
                 </HStack>
-                <BasicStatistics />
+                <BasicStatistics isLoading={isLoading} />
             </Flex>
         );
     }
 }
-// export async function getStaticProps(context) {
-//     await client.prefetchQuery(
-//         ["allData"],
-//         async () => await fetcher("https://server.devomkar.com/allData")
-//     );
-//     return {
-//         revalidate: 30,
-//         props: {
-//             dehydratedState: dehydrate(client),
-//         },
-//     };
-// }
+
+export async function getStaticProps(context) {
+    await client.prefetchQuery(
+        ["allData"],
+        async () => await fetcher("/api/allData")
+    );
+    return {
+        revalidate: 30,
+        props: {
+            dehydratedState: dehydrate(client),
+        },
+    };
+}

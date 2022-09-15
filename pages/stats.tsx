@@ -35,14 +35,14 @@ function StatsCard(props: any) {
     );
 }
 
-export default function BasicStatistics({}) {
+export default function BasicStatistics({ isLoading }) {
+    const allData: any = client.getQueryData(["allData"]);
     const sorter = (toSort) => {
         const Sorted = Object.entries(toSort)
-            .sort(([, a], [, b]) => b - a)
+            .sort(([, a]: any, [, b]: any) => b - a)
             .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
         return Sorted;
     };
-    const allData = [];
     const getAllUniqueName = () => {
         const nameDataAll = {};
         allData?.map((ele) => {
@@ -65,12 +65,10 @@ export default function BasicStatistics({}) {
         });
         return sorter(snackDataAll);
     };
-    // const uniqueSnacksData = getAllUniqueSnack();
-    // const uniqueNameData = getAllUniqueName();
-    // const uniqueUsers = Object.keys(uniqueNameData).length;
-    // const uniqueSnack = Object.keys(uniqueSnacksData).length;
-    const uniqueUsers = 100;
-    const uniqueSnack = 100;
+    const uniqueSnacksData = getAllUniqueSnack();
+    const uniqueNameData = getAllUniqueName();
+    const uniqueUsers = Object.keys(uniqueNameData).length;
+    const uniqueSnack = Object.keys(uniqueSnacksData).length;
     return (
         <Box maxW="7xl" mx={"auto"} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
             <chakra.h1
@@ -87,13 +85,16 @@ export default function BasicStatistics({}) {
             >
                 <StatsCard
                     title={"We served"}
+                    isLoading={isLoading}
                     stat={`${allData?.length || 0} times`}
                 />
                 <StatsCard
+                    isLoading={isLoading}
                     title={"To"}
                     stat={`${uniqueUsers} distinct users`}
                 />
                 <StatsCard
+                    isLoading={isLoading}
                     title={"With over"}
                     stat={`  ${uniqueSnack} unique snacks`}
                 />

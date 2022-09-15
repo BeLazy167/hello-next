@@ -47,7 +47,7 @@ async function todayData() {
     return await res.json();
 }
 async function getDaySnack() {
-    const res = await fetch("/api/daySnack");
+    const res = await fetch("/api/dauSnack");
     if (!res.ok) {
         throw new Error("Failed to get data");
     }
