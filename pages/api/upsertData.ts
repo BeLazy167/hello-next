@@ -4,7 +4,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
         const userData = req.body;
         const { name, email, snack } = userData;
-        console.log(`${name} just submitted the form!`);
+
         const findFirst = await prisma.user.findFirst({
             where: {
                 AND: [
@@ -30,15 +30,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                     snack: snack,
                 },
             });
+            finalData["isFound"] = true;
+            console.log(`${name} just re-submitted the form!`);
             prisma.$disconnect();
-
             res.json(finalData);
         } else {
             const finalData = await prisma.user.create({
                 data: userData,
             });
-            prisma.$disconnect();
+            console.log(`${name} just submitted the form!`);
 
+            prisma.$disconnect();
+            finalData["isFound"] = true;
             res.json(finalData);
         }
     }

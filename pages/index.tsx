@@ -13,7 +13,7 @@ export default function Home() {
         ["allData"],
         async () => await fetcher("/api/allData")
     );
-    const datax = client.getQueryData(["allData"]);
+
     if (!session) {
         return (
             <>
@@ -45,9 +45,16 @@ export default function Home() {
                 alignItems="center"
                 justifyContent="center"
             >
-                <Heading>Welcome {`${session.user.name}`}</Heading>
+                <Heading>Welcome {`${session.user.name}!`}</Heading>
                 <HStack mt={4}>
-                    <Button colorScheme="teal">Get Snacks!</Button>
+                    <Link
+                        href={{
+                            pathname: "./temp",
+                        }}
+                    >
+                        <Button colorScheme="teal">Get Snacks!</Button>
+                    </Link>
+
                     <Link
                         href={{
                             pathname: "./account",

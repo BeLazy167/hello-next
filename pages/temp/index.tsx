@@ -1,23 +1,22 @@
 import {
-    Box,
     Button,
     Center,
     FormControl,
-    FormHelperText,
-    FormLabel,
-    Input,
+    Heading,
     Radio,
     RadioGroup,
     Stack,
-    Toast,
+    Text as ChakraText,
     VStack,
+    Spinner,
+    useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import Router from "next/router";
+import { useSession, getSession } from "next-auth/react";
 
-import { useSession, signOut, getSession } from "next-auth/react";
-
-async function upsertData(data) {
+async function upsertData(data: any) {
     const res = await fetch("/api/upsertData", {
         method: "POST",
         body: JSON.stringify(data),
@@ -30,24 +29,9 @@ async function upsertData(data) {
     }
     return await res.json();
 }
-async function getallData() {
-    const res = await fetch("/api/allData");
-    if (!res.ok) {
-        throw new Error("Failed to get data");
-    }
 
-    return await res.json();
-}
-async function todayData() {
-    const res = await fetch("/api/todayData");
-    if (!res.ok) {
-        throw new Error("Failed to get data");
-    }
-
-    return await res.json();
-}
 async function getDaySnack() {
-    const res = await fetch("/api/dauSnack");
+    const res = await fetch("/api/daySnack");
     if (!res.ok) {
         throw new Error("Failed to get data");
     }
@@ -56,14 +40,16 @@ async function getDaySnack() {
 }
 
 export default function Page1() {
-    const { data: getDaySnackData } = useQuery(["daySnack"], getDaySnack);
-    const { data: allData } = useQuery(["allDataAnother"], getallData);
-    const { data: todayDataRes } = useQuery(["todayData"], todayData);
-    const { data: session, status } = useSession({ required: true });
+    const toast = useToast();
+    const { data: getDaySnackData, isLoading: getSnackDataLoading } = useQuery(
+        ["daySnack"],
+        getDaySnack
+    );
 
+    const { data: session } = useSession({ required: true });
     const [data, setData] = useState({
-        name: session?.user?.name,
-        email: session?.user?.email,
+        name: "",
+        email: "",
         snack: "",
     });
 
@@ -77,6 +63,14 @@ export default function Page1() {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+        toast({
+            title: "Submitting",
+            description: "Submitting your snack choice",
+            status: "info",
+            duration: 3000,
+            isClosable: true,
+            position: "top-right",
+        });
         if (data.snack === "") {
             alert("Please select a snack");
             return;
@@ -90,31 +84,60 @@ export default function Page1() {
 
     const { mutate, isLoading } = useMutation(upsertData, {
         onSuccess: (data) => {
-            console.log(data);
+            if (data.isFound) {
+                toast({
+                    title: "Snack updated successfully",
+                    description: "Your id is " + data.id,
+                    status: "success",
+                    duration: 3000,
+                    position: "top-right",
+                    isClosable: true,
+                });
+                localStorage.setItem("snackData", JSON.stringify(data));
+                Router.push("/temp/thanks");
+            } else {
+                toast({
+                    title: "Snack submitted successfully",
+                    status: "success",
+                    duration: 3000,
+                    position: "top-right",
+                    isClosable: true,
+                });
+                localStorage.setItem("snackData", JSON.stringify(data));
+                Router.push("/temp/thanks");
+            }
         },
     });
     const renderOptions = () => {
         return (
             <Stack direction="row">
                 {getDaySnackData?.map((item: any, index: number) => (
-                    <Radio name="snack" key={index} value={item}>
+                    <Radio key={index} value={item}>
                         {item}
                     </Radio>
                 ))}
             </Stack>
         );
     };
-    console.log(data);
+
     return (
-        <Center w="50%" mx="auto" mt={10}>
+        <Center w="50%" mx="auto" mt="10%">
             <FormControl>
                 <Center mt={5}>
                     <VStack>
+                        <Heading> Hey {session?.user?.name}</Heading>
+                        <ChakraText>
+                            What would you like to have today?
+                        </ChakraText>
                         <RadioGroup
                             onChange={(e) => handleRadioChange(e)}
                             value={data.snack}
                         >
-                            {getDaySnackData && renderOptions()}
+                            {getSnackDataLoading ? (
+                                <Spinner />
+                            ) : (
+                                renderOptions()
+                            )}
                         </RadioGroup>
                         <Button disabled={isLoading} onClick={handleSubmit}>
                             Submit

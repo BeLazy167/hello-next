@@ -9,14 +9,17 @@ import {
     Spinner,
     useColorModeValue,
 } from "@chakra-ui/react";
+import CountUp from "react-countup";
 
 import client from "./react-query-client";
 interface StatsCardProps {
     title: string;
-    stat: string;
+    stat: number;
+    isLoading: boolean;
+    secondTitle: string;
 }
-function StatsCard(props: any) {
-    const { title, stat, isLoading } = props;
+function StatsCard(props: StatsCardProps) {
+    const { title, stat, isLoading, secondTitle } = props;
     return (
         <Stat
             px={{ base: 4, md: 8 }}
@@ -29,8 +32,9 @@ function StatsCard(props: any) {
             <StatLabel fontWeight={"medium"}>{title}</StatLabel>
 
             <StatNumber fontSize={"2xl"} fontWeight={"medium"}>
-                {isLoading ? <Spinner /> : stat}
+                {isLoading ? <Spinner /> : <CountUp end={stat} />}
             </StatNumber>
+            <StatLabel fontWeight={"medium"}>{secondTitle}</StatLabel>
         </Stat>
     );
 }
@@ -71,14 +75,14 @@ export default function BasicStatistics({ isLoading }) {
     const uniqueSnack = Object.keys(uniqueSnacksData).length;
     return (
         <Box maxW="7xl" mx={"auto"} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
-            <chakra.h1
+            {/* <chakra.h1
                 textAlign={"center"}
                 fontSize={"4xl"}
                 py={10}
                 fontWeight={"bold"}
             >
                 What is this app doing?
-            </chakra.h1>
+            </chakra.h1> */}
             <SimpleGrid
                 columns={{ base: 1, md: 3 }}
                 spacing={{ base: 5, lg: 8 }}
@@ -86,17 +90,22 @@ export default function BasicStatistics({ isLoading }) {
                 <StatsCard
                     title={"We served"}
                     isLoading={isLoading}
-                    stat={`${allData?.length || 0} times`}
+                    // stat={`${allData?.length || 0} times`}
+                    stat={allData?.length}
+                    secondTitle={"times"}
                 />
                 <StatsCard
                     isLoading={isLoading}
                     title={"To"}
-                    stat={`${uniqueUsers} distinct users`}
+                    // stat={`${uniqueUsers} distinct users`}
+                    stat={uniqueUsers}
+                    secondTitle={"distinct users"}
                 />
                 <StatsCard
                     isLoading={isLoading}
                     title={"With over"}
-                    stat={`  ${uniqueSnack} unique snacks`}
+                    stat={uniqueSnack}
+                    secondTitle={"unique snacks"}
                 />
             </SimpleGrid>
         </Box>
