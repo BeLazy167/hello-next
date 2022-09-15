@@ -18,7 +18,7 @@ import client from "../react-query-client";
 import { sorter, filterData } from "./logic";
 import { useQuery } from "@tanstack/react-query";
 
-const account = () => {
+const Account = () => {
     const { data: session, status } = useSession({ required: true });
 
     const email = session?.user?.email;
@@ -115,7 +115,7 @@ const account = () => {
 };
 const fetcher = async (u) => await fetch(u).then((res) => res.json());
 
-export default account;
+export default Account;
 export const getServerSideProps = async (context) => {
     const session = await getSession(context);
 
