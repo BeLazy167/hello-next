@@ -74,22 +74,24 @@ export default function Thanks({ snackData }) {
                                 </TableCaption>
 
                                 <Tbody>
-                                    {Object.keys(restSnackData).map((key) => {
-                                        return (
-                                            <Tr>
-                                                <Td>
-                                                    <Badge>
-                                                        {key.toUpperCase()}
-                                                    </Badge>
-                                                </Td>
-                                                <Td>
-                                                    <ChakraText as="samp">
-                                                        {restSnackData[key]}
-                                                    </ChakraText>
-                                                </Td>
-                                            </Tr>
-                                        );
-                                    })}
+                                    {Object.keys(restSnackData).map(
+                                        (key, idx) => {
+                                            return (
+                                                <Tr key={idx}>
+                                                    <Td>
+                                                        <Badge>
+                                                            {key.toUpperCase()}
+                                                        </Badge>
+                                                    </Td>
+                                                    <Td>
+                                                        <ChakraText as="samp">
+                                                            {restSnackData[key]}
+                                                        </ChakraText>
+                                                    </Td>
+                                                </Tr>
+                                            );
+                                        }
+                                    )}
                                 </Tbody>
                             </Table>
                         </TableContainer>
