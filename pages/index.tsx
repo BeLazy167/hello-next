@@ -1,13 +1,14 @@
 import Link from "../node_modules/next/link";
-import { Flex, Heading, Button, Text, HStack } from "@chakra-ui/react";
+import { Flex, Heading, Button, Text, HStack, Box } from "@chakra-ui/react";
 import client from "./react-query-client";
 import { useQuery, dehydrate } from "@tanstack/react-query";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, getSession, signIn, getProviders } from "next-auth/react";
 import BasicStatistics from "./stats";
-
+import dynamic from "next/dynamic";
+const SignIn = dynamic(() => import("./auth"));
 const fetcher = async (u: string) => await fetch(u).then((res) => res.json());
 
-export default function Home() {
+export default function Home({ providers }) {
     const { data: session } = useSession();
     const { data: allData, isLoading } = useQuery(
         ["allData"],
@@ -16,26 +17,17 @@ export default function Home() {
 
     if (!session) {
         return (
-            <>
-                <Flex
-                    direction="column"
-                    height="90vh"
-                    alignItems="center"
-                    justifyContent="center"
-                >
-                    <Heading>Welcome to Snacks App</Heading>
-                    <Text mt={3}>Click below to Sign In</Text>
-                    <Button
-                        onClick={() => signIn()}
-                        variant="outline"
-                        colorScheme="teal"
-                        mt={4}
-                    >
-                        Sign in
-                    </Button>
-                    <BasicStatistics isLoading={isLoading} />
-                </Flex>
-            </>
+            <Flex
+                direction="column"
+                height="90vh"
+                alignItems="center"
+                justifyContent="center"
+            >
+                <Heading>Welcome to Snacks App</Heading>
+
+                <SignIn providers={providers} />
+                <BasicStatistics isLoading={isLoading} />
+            </Flex>
         );
     } else {
         return (
@@ -75,15 +67,17 @@ export default function Home() {
     }
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
     await client.prefetchQuery(
         ["allData"],
         async () => await fetcher("/api/allData")
     );
     return {
         revalidate: 30,
+
         props: {
             dehydratedState: dehydrate(client),
+            providers: await getProviders(),
         },
     };
 }

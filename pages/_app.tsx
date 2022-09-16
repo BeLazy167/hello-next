@@ -9,7 +9,7 @@ export default function MyApp({ Component, pageProps, session }) {
             <QueryClientProvider client={client}>
                 <Hydrate state={pageProps.dehydratedState}>
                     <SessionProvider session={session}>
-                        <Component {...pageProps} />;
+                        <Component {...pageProps} />
                         <ReactQueryDevtools />
                     </SessionProvider>
                 </Hydrate>

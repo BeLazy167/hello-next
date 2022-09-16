@@ -25,6 +25,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             .then(async () => await prisma.$disconnect());
         console.log("Snack migration completed!");
 
-        res.json(finalData);
+        res.json(dataindb);
     }
 };

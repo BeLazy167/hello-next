@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import Router from "next/router";
 import { useSession, getSession } from "next-auth/react";
-
+import cookie from "js-cookie";
 async function upsertData(data: any) {
     const res = await fetch("/api/upsertData", {
         method: "POST",
@@ -85,6 +85,9 @@ export default function Page1() {
     const { mutate, isLoading } = useMutation(upsertData, {
         onSuccess: (data) => {
             if (data.isFound) {
+                cookie.set("snackData", JSON.stringify(data), {
+                    expires: 1 / (24 * 60),
+                });
                 toast({
                     title: "Snack updated successfully",
                     description: "Your id is " + data.id,
@@ -93,9 +96,12 @@ export default function Page1() {
                     position: "top-right",
                     isClosable: true,
                 });
-                localStorage.setItem("snackData", JSON.stringify(data));
+
                 Router.push("/temp/thanks");
             } else {
+                cookie.set("snackData", JSON.stringify(data), {
+                    expires: 1 / (24 * 60),
+                });
                 toast({
                     title: "Snack submitted successfully",
                     status: "success",
@@ -103,7 +109,7 @@ export default function Page1() {
                     position: "top-right",
                     isClosable: true,
                 });
-                localStorage.setItem("snackData", JSON.stringify(data));
+
                 Router.push("/temp/thanks");
             }
         },
