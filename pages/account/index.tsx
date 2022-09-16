@@ -14,7 +14,7 @@ import {
     Spinner,
 } from "@chakra-ui/react";
 import client from "../react-query-client";
-import { sorter, filterData } from "./logic";
+import sorter, { filterData } from "./logic";
 import { useQuery } from "@tanstack/react-query";
 
 const Account = () => {

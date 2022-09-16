@@ -1,4 +1,4 @@
-export function sorter(toSort: any) {
+export default function sorter(toSort: any) {
     if (toSort != null) {
         const Sorted = Object.entries(toSort)
             .sort(([, a]: any, [, b]: any) => b - a)
