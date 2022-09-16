@@ -12,7 +12,6 @@ import {
     Stack,
     Button,
     Spinner,
-    useColorModeValue,
 } from "@chakra-ui/react";
 import client from "../react-query-client";
 import { sorter, filterData } from "./logic";
@@ -30,7 +29,6 @@ const Account = () => {
                     <Box
                         maxW={"270px"}
                         w={"full"}
-                        bg={useColorModeValue("white", "gray.800")}
                         boxShadow={"2xl"}
                         rounded={"md"}
                         overflow={"hidden"}
@@ -90,7 +88,6 @@ const Account = () => {
                                 onClick={() => signOut()}
                                 w={"full"}
                                 mt={8}
-                                bg={useColorModeValue("#151f21", "gray.900")}
                                 color={"white"}
                                 rounded={"md"}
                                 _hover={{

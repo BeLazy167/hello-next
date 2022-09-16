@@ -7,7 +7,6 @@ import {
     StatLabel,
     StatNumber,
     Spinner,
-    useColorModeValue,
 } from "@chakra-ui/react";
 import CountUp from "react-countup";
 
@@ -26,7 +25,6 @@ function StatsCard(props: StatsCardProps) {
             py={"5"}
             shadow={"xl"}
             border={"1px solid"}
-            borderColor={useColorModeValue("gray.800", "gray.500")}
             rounded={"lg"}
         >
             <StatLabel fontWeight={"medium"}>{title}</StatLabel>
