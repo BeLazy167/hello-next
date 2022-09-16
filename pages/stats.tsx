@@ -9,8 +9,8 @@ import {
     Spinner,
 } from "@chakra-ui/react";
 import CountUp from "react-countup";
-
-import client from "./react-query-client";
+import { QueryClient, dehydrate, useQuery } from "@tanstack/react-query";
+const client = new QueryClient();
 interface StatsCardProps {
     title: string;
     stat: number;
@@ -37,8 +37,12 @@ function StatsCard(props: StatsCardProps) {
     );
 }
 
-export default function BasicStatistics({ isLoading }) {
-    const allData: any = client.getQueryData(["allData"]);
+export default function BasicStatistics() {
+    const { data: allData, isLoading } = useQuery(
+        ["allData"],
+        async () => await fetcher("/api/allData")
+    );
+
     const sorter = (toSort) => {
         const Sorted = Object.entries(toSort)
             .sort(([, a]: any, [, b]: any) => b - a)
@@ -73,14 +77,7 @@ export default function BasicStatistics({ isLoading }) {
     const uniqueSnack = Object.keys(uniqueSnacksData).length;
     return (
         <Box maxW="7xl" mx={"auto"} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
-            {/* <chakra.h1
-                textAlign={"center"}
-                fontSize={"4xl"}
-                py={10}
-                fontWeight={"bold"}
-            >
-                What is this app doing?
-            </chakra.h1> */}
+          
             <SimpleGrid
                 columns={{ base: 1, md: 3 }}
                 spacing={{ base: 5, lg: 8 }}
@@ -108,4 +105,19 @@ export default function BasicStatistics({ isLoading }) {
             </SimpleGrid>
         </Box>
     );
+}
+const fetcher = async (u: string) => await fetch(u).then((res) => res.json());
+
+export async function getStaticProps() {
+    await client.prefetchQuery(
+        ["allData"],
+        async () => await fetcher("/api/allData")
+    );
+    return {
+        revalidate: 30,
+
+        props: {
+            dehydratedState: dehydrate(client),
+        },
+    };
 }

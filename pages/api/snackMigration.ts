@@ -1,4 +1,5 @@
-// import prisma from "../prisma-client";
+// import { prisma } from "../prisma-client";
+// 
 // import data from "./temp.json";
 // import { NextApiRequest, NextApiResponse } from "next";
 

@@ -13,10 +13,10 @@ import {
     Button,
     Spinner,
 } from "@chakra-ui/react";
-import client from "../react-query-client";
-import sorter, { filterData } from "./logic";
-import { useQuery } from "@tanstack/react-query";
 
+import sorter, { filterData } from "./logic";
+import { QueryClient } from "@tanstack/react-query";
+const client = new QueryClient();
 const Account = () => {
     const { data: session, status } = useSession({ required: true });
 
