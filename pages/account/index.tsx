@@ -6,21 +6,16 @@ import {
     Box,
     Center,
     Image,
-    Highlight,
     Flex,
     Text,
     Stack,
     Button,
-    Spinner,
 } from "@chakra-ui/react";
 
-import sorter, { filterData } from "./logic";
 import { QueryClient } from "@tanstack/react-query";
 const client = new QueryClient();
 const Account = () => {
     const { data: session, status } = useSession({ required: true });
-
-    const email = session?.user?.email;
 
     if (session) {
         return (
