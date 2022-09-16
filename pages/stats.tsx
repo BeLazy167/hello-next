@@ -1,7 +1,9 @@
 import {
     Box,
+    chakra,
     SimpleGrid,
     Stat,
+    Highlight,
     StatLabel,
     StatNumber,
     Spinner,
@@ -37,7 +39,7 @@ function StatsCard(props: StatsCardProps) {
 
 export default function BasicStatistics({ isLoading }) {
     const allData: any = client.getQueryData(["allData"]);
-    const sorter = (toSort: any) => {
+    const sorter = (toSort) => {
         const Sorted = Object.entries(toSort)
             .sort(([, a]: any, [, b]: any) => b - a)
             .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
@@ -45,7 +47,7 @@ export default function BasicStatistics({ isLoading }) {
     };
     const getAllUniqueName = () => {
         const nameDataAll = {};
-        allData?.map((ele: any) => {
+        allData?.map((ele) => {
             if (nameDataAll[ele.name]) {
                 nameDataAll[ele.name] += 1;
             } else {
@@ -71,6 +73,14 @@ export default function BasicStatistics({ isLoading }) {
     const uniqueSnack = Object.keys(uniqueSnacksData).length;
     return (
         <Box maxW="7xl" mx={"auto"} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
+            {/* <chakra.h1
+                textAlign={"center"}
+                fontSize={"4xl"}
+                py={10}
+                fontWeight={"bold"}
+            >
+                What is this app doing?
+            </chakra.h1> */}
             <SimpleGrid
                 columns={{ base: 1, md: 3 }}
                 spacing={{ base: 5, lg: 8 }}
@@ -78,12 +88,14 @@ export default function BasicStatistics({ isLoading }) {
                 <StatsCard
                     title={"We served"}
                     isLoading={isLoading}
+                    // stat={`${allData?.length || 0} times`}
                     stat={allData?.length}
                     secondTitle={"times"}
                 />
                 <StatsCard
                     isLoading={isLoading}
                     title={"To"}
+                    // stat={`${uniqueUsers} distinct users`}
                     stat={uniqueUsers}
                     secondTitle={"distinct users"}
                 />

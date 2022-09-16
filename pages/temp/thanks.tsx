@@ -18,7 +18,7 @@ import {
     TableContainer,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-
+import cookie from "js-cookie";
 import Confetti from "react-confetti";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Link from "next/link";

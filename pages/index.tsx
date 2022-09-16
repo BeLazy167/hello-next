@@ -1,8 +1,8 @@
 import Link from "../node_modules/next/link";
-import { Flex, Heading, Button, HStack } from "@chakra-ui/react";
+import { Flex, Heading, Button, Text, HStack, Box } from "@chakra-ui/react";
 import client from "./react-query-client";
 import { useQuery, dehydrate } from "@tanstack/react-query";
-import { useSession, getProviders } from "next-auth/react";
+import { useSession, getSession, signIn, getProviders } from "next-auth/react";
 import BasicStatistics from "./stats";
 import dynamic from "next/dynamic";
 const SignIn = dynamic(() => import("./auth"));
