@@ -6,21 +6,14 @@ import {
     Box,
     Center,
     Image,
-    Highlight,
     Flex,
     Text,
     Stack,
     Button,
-    Spinner,
 } from "@chakra-ui/react";
-import client from "../react-query-client";
-import { sorter, filterData } from "./logic";
-import { useQuery } from "@tanstack/react-query";
 
-const Account = () => {
-    const { data: session, status } = useSession({ required: true });
-
-    const email = session?.user?.email;
+export default function Account() {
+    const { data: session } = useSession({ required: true });
 
     if (session) {
         return (
@@ -109,10 +102,9 @@ const Account = () => {
             </div>
         );
     }
-};
+}
 const fetcher = async (u) => await fetch(u).then((res) => res.json());
 
-export default Account;
 export const getServerSideProps = async (context) => {
     const session = await getSession(context);
 
