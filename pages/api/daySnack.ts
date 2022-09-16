@@ -1,4 +1,4 @@
-import { prisma } from "../prisma-client";
+import { prisma } from "./prisma-client";
 
 import dayjs from "dayjs";
 import { NextApiRequest, NextApiResponse } from "next";
