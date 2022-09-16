@@ -1,7 +1,7 @@
 export function sorter(toSort: any) {
     if (toSort != null) {
         const Sorted = Object.entries(toSort)
-            .sort(([, a], [, b]) => b - a)
+            .sort(([, a]: any, [, b]: any) => b - a)
             .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
         return Sorted;
     } else {
