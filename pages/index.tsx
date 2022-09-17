@@ -1,10 +1,12 @@
 import Link from "../node_modules/next/link";
 import { Flex, Heading, Button, HStack } from "@chakra-ui/react";
-
+import Loader from "../components/Loader";
 import { useSession, getProviders, getSession } from "next-auth/react";
 import BasicStatistics from "./stats";
 import dynamic from "next/dynamic";
-const SignIn = dynamic(() => import("../components/SignIn"));
+const SignIn = dynamic(() => import("../components/SignIn"), {
+    loading: () => <Loader />,
+});
 
 export default function Home({ providers }) {
     const { data: session } = useSession();

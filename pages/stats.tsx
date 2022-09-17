@@ -1,14 +1,8 @@
-import {
-    Box,
-    SimpleGrid,
-    Stat,
-    StatLabel,
-    StatNumber,
-    Spinner,
-} from "@chakra-ui/react";
+import { Box, SimpleGrid, Stat, StatLabel, StatNumber } from "@chakra-ui/react";
 import CountUp from "react-countup";
 import { QueryClient, dehydrate, useQuery } from "@tanstack/react-query";
 const client = new QueryClient();
+import Loader from "../components/Loader";
 interface StatsCardProps {
     title: string;
     stat: number;
@@ -28,7 +22,7 @@ function StatsCard(props: StatsCardProps) {
             <StatLabel fontWeight={"medium"}>{title}</StatLabel>
 
             <StatNumber fontSize={"2xl"} fontWeight={"medium"}>
-                {isLoading ? <Spinner /> : <CountUp end={stat} />}
+                {isLoading ? <Loader /> : <CountUp end={stat} />}
             </StatNumber>
             <StatLabel fontWeight={"medium"}>{secondTitle}</StatLabel>
         </Stat>

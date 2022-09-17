@@ -8,7 +8,6 @@ import {
     Stack,
     Text as ChakraText,
     VStack,
-    Spinner,
     useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -16,6 +15,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import Router from "next/router";
 import { useSession, getSession } from "next-auth/react";
 import cookie from "js-cookie";
+import { LoaderTwo } from "../../components/Loader";
 async function upsertData(data: any) {
     const res = await fetch("/api/upsertData", {
         method: "POST",
@@ -140,7 +140,7 @@ export default function Page1() {
                             value={data.snack}
                         >
                             {getSnackDataLoading ? (
-                                <Spinner />
+                                <LoaderTwo />
                             ) : (
                                 renderOptions()
                             )}
