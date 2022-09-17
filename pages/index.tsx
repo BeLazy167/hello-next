@@ -1,10 +1,10 @@
 import Link from "../node_modules/next/link";
 import { Flex, Heading, Button, HStack } from "@chakra-ui/react";
 
-import { useSession, getProviders } from "next-auth/react";
+import { useSession, getProviders, getSession } from "next-auth/react";
 import BasicStatistics from "./stats";
 import dynamic from "next/dynamic";
-const SignIn = dynamic(() => import("./auth"));
+const SignIn = dynamic(() => import("../components/SignIn"));
 
 export default function Home({ providers }) {
     const { data: session } = useSession();
@@ -57,12 +57,11 @@ export default function Home({ providers }) {
     }
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(context: any) {
     return {
-        revalidate: 30,
-
         props: {
             providers: await getProviders(),
+            session: await getSession(context),
         },
     };
 }

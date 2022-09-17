@@ -106,6 +106,7 @@ export default function Thanks({ snackData }) {
         </>
     );
 }
+
 export async function getServerSideProps({ req, res }) {
     const cook = req.cookies.snackData;
     if (cook === undefined) {

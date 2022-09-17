@@ -2,6 +2,7 @@ import React from "react";
 import { signIn } from "next-auth/react";
 import { Box, Button, Container, Stack } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
+
 export default function SignIn({ providers }) {
     return (
         <Container maxW="xl" centerContent>

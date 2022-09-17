@@ -8,7 +8,7 @@ export default NextAuth({
         }),
     ],
     pages: {
-        signIn: "/auth/signin",
+        signIn: "../../../components/SignIn",
     },
     secret: process.env.JWT_SECRET,
     callbacks: {

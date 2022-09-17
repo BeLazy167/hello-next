@@ -41,7 +41,7 @@ export default function BasicStatistics() {
         async () => await fetcher("/api/allData")
     );
 
-    const sorter = (toSort) => {
+    const sorter = (toSort: any) => {
         const Sorted = Object.entries(toSort)
             .sort(([, a]: any, [, b]: any) => b - a)
             .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
@@ -49,7 +49,7 @@ export default function BasicStatistics() {
     };
     const getAllUniqueName = () => {
         const nameDataAll = {};
-        allData?.map((ele) => {
+        allData?.map((ele: any) => {
             if (nameDataAll[ele.name]) {
                 nameDataAll[ele.name] += 1;
             } else {
@@ -73,6 +73,7 @@ export default function BasicStatistics() {
     const uniqueNameData = getAllUniqueName();
     const uniqueUsers = Object.keys(uniqueNameData).length;
     const uniqueSnack = Object.keys(uniqueSnacksData).length;
+
     return (
         <Box maxW="7xl" mx={"auto"} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
             <SimpleGrid
@@ -103,7 +104,9 @@ export default function BasicStatistics() {
         </Box>
     );
 }
-const fetcher = async (u: string) => await fetch(u).then((res) => res.json());
+
+const fetcher = async (u: string) =>
+    await fetch(u).then(async (res) => await res.json());
 
 export async function getStaticProps() {
     await client.prefetchQuery(
@@ -112,7 +115,6 @@ export async function getStaticProps() {
     );
     return {
         revalidate: 30,
-
         props: {
             dehydratedState: dehydrate(client),
         },
