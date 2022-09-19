@@ -52,8 +52,14 @@ export default function Thanks({ snackData }) {
                             Thanks for your order
                         </ChakraText>
                         <ChakraText>🥰😋🤩</ChakraText>
-                        <TableContainer boxShadow="lg">
-                            <Table variant="simple" borderRadius="md">
+                        <TableContainer
+                            boxShadow="lg"
+                            // m={24}
+                            border="1px solid"
+                            borderColor="gray.100"
+                            borderRadius="md"
+                        >
+                            <Table>
                                 <Thead>
                                     <Tr border="none">
                                         <Th as="kbd">Summary</Th>

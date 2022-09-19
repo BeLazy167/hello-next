@@ -59,7 +59,7 @@ export default function Home({ providers }) {
     }
 }
 
-export async function getServerSideProps(context: any) {
+export async function getStaticProps(context: any) {
     return {
         props: {
             providers: await getProviders(),
