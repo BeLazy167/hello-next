@@ -29,7 +29,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 data: snackData,
             });
             prisma.$disconnect();
-
             res.json(finalData);
         }
     }

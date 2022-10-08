@@ -40,6 +40,19 @@ async function getDaySnack() {
 }
 
 export default function Page1() {
+    const [isDisabled, setIsDisabled] = useState(true);
+    const [time, setTime] = useState<number>();
+
+    let stopper = setInterval(() => {
+        setTime(new Date().getUTCHours());
+
+        setIsDisabled(!(time >= 4 && time < 8));
+    }, 1000);
+
+    setTimeout(() => {
+        clearInterval(stopper);
+    }, 5000);
+
     const toast = useToast();
     const { data: getDaySnackData, isLoading: getSnackDataLoading } = useQuery(
         ["daySnack"],
@@ -62,19 +75,35 @@ export default function Page1() {
     }, [session]);
 
     const handleSubmit = async (e: any) => {
-        e.preventDefault();
-        toast({
-            title: "Submitting",
-            description: "Submitting your snack choice",
-            status: "info",
-            duration: 3000,
-            isClosable: true,
-            position: "top-right",
-        });
-        if (data.snack === "") {
-            alert("Please select a snack");
-            return;
+        if (isDisabled || !data.snack) {
+            if (isDisabled) {
+                toast({
+                    title: "Snacks are only available between 4:00 AM and 8:00 AM",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                    position: "top-right",
+                });
+            }
+            if (!data.snack) {
+                toast({
+                    title: "Please select a snack",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                    position: "top-right",
+                });
+            }
         } else {
+            e.preventDefault();
+            toast({
+                title: "Submitting",
+                description: "Submitting your snack choice",
+                status: "info",
+                duration: 3000,
+                isClosable: true,
+                position: "top-right",
+            });
             mutate(data);
         }
     };
@@ -145,7 +174,7 @@ export default function Page1() {
                                 renderOptions()
                             )}
                         </RadioGroup>
-                        <Button disabled={isLoading} onClick={handleSubmit}>
+                        <Button disabled={isDisabled} onClick={handleSubmit}>
                             Submit
                         </Button>
                     </VStack>
@@ -155,7 +184,7 @@ export default function Page1() {
     );
 }
 
-export const getServerSideProps = async (context) => {
+export async function getServerSideProps(context) {
     const session = await getSession(context);
 
     if (!session) {
@@ -166,9 +195,8 @@ export const getServerSideProps = async (context) => {
             },
         };
     }
+
     return {
-        props: {
-            session,
-        },
+        props: { session },
     };
-};
+}
