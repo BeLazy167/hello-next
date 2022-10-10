@@ -25,7 +25,7 @@ import {
 import { useState } from "react";
 import { QueryClient, useMutation, useQueries } from "@tanstack/react-query";
 import { getSession } from "next-auth/react";
-
+import StatBar from "../../components/StatBar";
 async function upsertData(data: any, url: string) {
     const res = await fetch(url, {
         method: "POST",
@@ -176,23 +176,27 @@ export default function Admin() {
             <Center mb={10}>
                 <Heading>Admin</Heading>
             </Center>
+            <Center mb={10}>
+                
+                <StatBar />
+            </Center>
             <Center mb={5}>
-                <HStack width="80%" ml="20%">
+                <HStack width="55%">
                     <Select
                         colorScheme="teal"
                         borderColor="teal.500"
                         name="day"
-                        width="20%"
+                        width="15%"
                         variant="outline"
                         isRequired
                         value={data.day}
                         onChange={handleChange}
-                        placeholder="Select Day"
+                        placeholder="Day"
                     >
                         {renderOptions()}
                     </Select>
                     <Input
-                        width="50%"
+                        // width="50%"
                         name="snack"
                         value={data.snack}
                         onChange={handleChange}
