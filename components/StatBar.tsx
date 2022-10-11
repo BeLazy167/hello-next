@@ -50,7 +50,7 @@ export default function StatBar() {
                         textTransform="uppercase"
                         ml="2"
                     >
-                        Today's Data
+                        {"Today's Data"}
                     </Box>
                 </Box>
                 <hr></hr>
