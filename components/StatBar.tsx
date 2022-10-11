@@ -1,26 +1,27 @@
 import { Badge, Box, HStack, Spacer, VStack } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
-export default function StatBar() {
-    const property = {
-        imageUrl: "https://bit.ly/2Z4KKcF",
-        imageAlt: "Rear view of modern home with pool",
-        beds: 3,
-        baths: 2,
-        title: "Modern home in city center in the heart of historic Los Angeles",
-        formattedPrice: "$1,900.00",
-        reviewCount: 34,
-        rating: 4,
-    };
-    const dx = [
-        {
-            snack: "chips",
-            count: 10,
-        },
-        {
-            snack: "chips",
-            count: 10,
-        },
-    ];
+export default function StatBar({ stats }) {
+    const [data, setData] = useState({});
+    const [dx, setDx] = useState([]);
+    useEffect(() => {
+        let objf = {};
+        stats?.map((each) => {
+            if (objf[each.snack] === undefined) {
+                objf[each.snack] = [each.name];
+            } else {
+                objf[each.snack].push(each.name);
+            }
+        });
+        console.log("xyz", objf);
+        let df = [];
+        Object.keys(objf).map((key) => {
+            setDx([...df, { snack: key, people: objf[key] }]);
+        });
+        setData(objf);
+        console.log("data", dx);
+    }, [stats]);
+
     const renderX = () => {
         return dx.map((x: any, idx: any) => {
             return (
@@ -33,6 +34,7 @@ export default function StatBar() {
             );
         });
     };
+    console.log("in statsbar", stats);
     return (
         <Box w="55%" borderWidth="1px" borderRadius="lg" overflow="hidden">
             {/* <Image src={property.imageUrl} alt={property.imageAlt} /> */}
@@ -65,7 +67,7 @@ export default function StatBar() {
                             px="2"
                             colorScheme="teal"
                         >
-                            300
+                            {stats?.length}
                         </Badge>
                     </VStack>
                     <Spacer />

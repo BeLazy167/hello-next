@@ -69,6 +69,10 @@ export default function Admin() {
             key: "allNotificationData",
             url: "/api/allNotificationData",
         },
+        {
+            key: "todayData",
+            url: "/api/todayData",
+        },
     ];
 
     const userQueries = useQueries({
@@ -171,14 +175,14 @@ export default function Admin() {
             );
         });
     };
+    console.log(userQueries[2]?.data);
     return (
         <div>
             <Center mb={10}>
                 <Heading>Admin</Heading>
             </Center>
             <Center mb={10}>
-                
-                <StatBar />
+                <StatBar stats={userQueries[2]?.data} />
             </Center>
             <Center mb={5}>
                 <HStack width="55%">
