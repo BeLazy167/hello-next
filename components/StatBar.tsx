@@ -22,9 +22,9 @@ export default function StatBar() {
         },
     ];
     const renderX = () => {
-        return dx.map((x) => {
+        return dx.map((x: any, idx: any) => {
             return (
-                <Box mt="1" lineHeight="tight">
+                <Box key={idx} mt="1" lineHeight="tight">
                     {x.snack}:{" "}
                     <Badge borderRadius="full" px="2" colorScheme="teal">
                         {x.count}
