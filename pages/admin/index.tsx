@@ -70,8 +70,8 @@ export default function Admin() {
             url: "/api/allNotificationData",
         },
         {
-            key: "todayData",
-            url: "/api/todayData",
+            key: "todayDataCustom",
+            url: "/api/todayDataCustom",
         },
     ];
 
@@ -96,13 +96,13 @@ export default function Admin() {
         (dataToSend: any) => upsertData(dataToSend, "/api/upsertSnackData"),
         {
             onSuccess: (data) => {
-                alert("Success");
                 client.resetQueries(["allSnackData"]);
                 Toast({
                     title: `Successfully updated ${data.day} `,
                     description: "Data has been updated",
                     status: "success",
                     duration: 3000,
+                    position: "top",
                     isClosable: true,
                 });
             },
@@ -175,7 +175,7 @@ export default function Admin() {
             );
         });
     };
-    console.log(userQueries[2]?.data);
+
     return (
         <div>
             <Center mb={10}>

@@ -1,40 +1,40 @@
 import { Badge, Box, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-
+// {
+//     "todayData": {
+//       "Missal Pav": {
+//         "count": 1,
+//         "names": [
+//           "Dhruv Khara"
+//         ]
+//       }
+//     },
+//     "length": 1
+//   }
 export default function StatBar({ stats }) {
     const [data, setData] = useState({});
     const [dx, setDx] = useState([]);
     useEffect(() => {
-        let objf = {};
-        stats?.map((each) => {
-            if (objf[each.snack] === undefined) {
-                objf[each.snack] = [each.name];
-            } else {
-                objf[each.snack].push(each.name);
-            }
-        });
-        console.log("xyz", objf);
-        let df = [];
-        Object.keys(objf).map((key) => {
-            setDx([...df, { snack: key, people: objf[key] }]);
-        });
-        setData(objf);
-        console.log("data", dx);
+        if (stats !== undefined) {
+            setData(stats);
+            setDx(Object.keys(stats?.["todayData"]));
+        }
+        console.log(JSON.stringify(stats));
     }, [stats]);
 
     const renderX = () => {
         return dx.map((x: any, idx: any) => {
             return (
                 <Box key={idx} mt="1" lineHeight="tight">
-                    {x.snack}:{" "}
+                    {x}:{" "}
                     <Badge borderRadius="full" px="2" colorScheme="teal">
-                        {x.count}
+                        {data?.["todayData"][x]["count"]}
                     </Badge>
                 </Box>
             );
         });
     };
-    console.log("in statsbar", stats);
+
     return (
         <Box w="55%" borderWidth="1px" borderRadius="lg" overflow="hidden">
             {/* <Image src={property.imageUrl} alt={property.imageAlt} /> */}
@@ -67,7 +67,7 @@ export default function StatBar({ stats }) {
                             px="2"
                             colorScheme="teal"
                         >
-                            {stats?.length}
+                            {stats?.["length"]}
                         </Badge>
                     </VStack>
                     <Spacer />

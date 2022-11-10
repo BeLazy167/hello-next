@@ -37,7 +37,7 @@ export default function Home({ providers }) {
                 <HStack mt={4}>
                     <Link
                         href={{
-                            pathname: "./temp",
+                            pathname: "./snacks",
                         }}
                     >
                         <Button colorScheme="teal">Get Snacks!</Button>

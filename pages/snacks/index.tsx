@@ -186,6 +186,14 @@ export default function Page1() {
 
 export async function getServerSideProps(context) {
     const session = await getSession(context);
+    if (new Date().getUTCDay() === 6 || new Date().getUTCDay() === 0) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            },
+        };
+    }
 
     if (!session) {
         return {

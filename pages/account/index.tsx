@@ -15,7 +15,7 @@ import {
 import { QueryClient } from "@tanstack/react-query";
 const client = new QueryClient();
 const Account = () => {
-    const { data: session, status } = useSession({ required: true });
+    const { data: session } = useSession({ required: true });
 
     if (session) {
         return (
