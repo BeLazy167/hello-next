@@ -126,7 +126,7 @@ export default function Page1() {
                     isClosable: true,
                 });
 
-                Router.push("/temp/thanks");
+                Router.push("/snacks/thanks");
             } else {
                 cookie.set("snackData", JSON.stringify(data), {
                     expires: 1 / (24 * 60),
@@ -139,7 +139,7 @@ export default function Page1() {
                     isClosable: true,
                 });
 
-                Router.push("/temp/thanks");
+                Router.push("/snacks/thanks");
             }
         },
     });

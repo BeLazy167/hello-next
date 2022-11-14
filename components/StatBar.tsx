@@ -1,4 +1,4 @@
-import { Badge, Box, HStack, Spacer, VStack } from "@chakra-ui/react";
+import { Badge, Box, HStack, Spacer, VStack, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 // {
 //     "todayData": {
@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 //     },
 //     "length": 1
 //   }
-export default function StatBar({ stats }) {
+export default function StatBar({ stats, isLoading }) {
     const [data, setData] = useState({});
     const [dx, setDx] = useState([]);
     useEffect(() => {
@@ -34,6 +34,40 @@ export default function StatBar({ stats }) {
             );
         });
     };
+
+    if (isLoading) {
+        return (
+            <Box w="55%" borderWidth="1px" borderRadius="lg" overflow="hidden">
+                {/* <Image src={property.imageUrl} alt={property.imageAlt} /> */}
+
+                <Box p="6">
+                    <Box mb={2} display="flex" alignItems="baseline">
+                        <Badge borderRadius="full" px="2" colorScheme="teal">
+                            Live
+                        </Badge>
+                        <Box
+                            color="gray.500"
+                            fontWeight="semibold"
+                            letterSpacing="wide"
+                            fontSize="xs"
+                            textTransform="uppercase"
+                            ml="2"
+                        >
+                            {"Today's Data"}
+                        </Box>
+                    </Box>
+                    <hr></hr>
+                    <HStack mt={2} w="80%" mx="auto">
+                        <Spacer />
+                        <VStack p={4}>
+                            <Spinner/>
+                        </VStack>
+                        <Spacer />
+                    </HStack>
+                </Box>
+            </Box>
+        )
+    }
 
     return (
         <Box w="55%" borderWidth="1px" borderRadius="lg" overflow="hidden">

@@ -175,6 +175,7 @@ export default function Admin() {
             );
         });
     };
+    console.log(userQueries);
 
     return (
         <div>
@@ -182,7 +183,7 @@ export default function Admin() {
                 <Heading>Admin</Heading>
             </Center>
             <Center mb={10}>
-                <StatBar stats={userQueries[2]?.data} />
+                <StatBar stats={userQueries[2]?.data} isLoading={userQueries[2]?.isLoading} />
             </Center>
             <Center mb={5}>
                 <HStack width="55%">
@@ -259,7 +260,7 @@ export default function Admin() {
 }
 
 export const getServerSideProps = async (context) => {
-    const AdminUsers = ["Roshan Maur", "Dhruv Khara"];
+    const AdminUsers = ["Roshan Maur", "Dhruv Khara","Prakash Sewani"];
     const session = await getSession(context);
 
     if (!session) {
