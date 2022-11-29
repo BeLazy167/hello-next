@@ -1,5 +1,8 @@
-// import { prisma } from "../prisma-client";
-// 
+
+//TO MIGRATE USE THIS CODE 
+
+// import { prisma } from "./prisma-client";
+
 // import data from "./temp.json";
 // import { NextApiRequest, NextApiResponse } from "next";
 
