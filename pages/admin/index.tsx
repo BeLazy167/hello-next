@@ -26,6 +26,7 @@ import { useState } from "react";
 import { QueryClient, useMutation, useQueries } from "@tanstack/react-query";
 import { getSession } from "next-auth/react";
 import StatBar from "../../components/StatBar";
+import TableX from "../../components/Table";
 async function upsertData(data: any, url: string) {
     const res = await fetch(url, {
         method: "POST",
@@ -72,6 +73,10 @@ export default function Admin() {
         {
             key: "todayDataCustom",
             url: "/api/todayDataCustom",
+        },
+        {
+            key: "todayData",
+            url: "/api/todayData",
         },
     ];
 
@@ -256,6 +261,14 @@ export default function Admin() {
                         </AccordionItem>
                     </Accordion>
                 )}
+            </Center>
+            <Center>
+                <Heading mt={10} mb={5}>
+                    {"Today's Order Data"}
+                </Heading>
+            </Center>
+            <Center ml={20} mr={20}>
+                <TableX userData={userQueries[3]?.data} />
             </Center>
         </div>
     );
