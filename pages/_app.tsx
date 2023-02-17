@@ -3,6 +3,7 @@ import { QueryClientProvider, Hydrate ,QueryClient } from "@tanstack/react-query
 import { SessionProvider } from "next-auth/react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React from "react";
+import '../pages/account/custom.css'
 export default function MyApp({ Component, pageProps, session }) {
     const [client] = React.useState(() => new QueryClient());
     return (
