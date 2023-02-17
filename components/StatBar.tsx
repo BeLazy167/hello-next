@@ -41,8 +41,8 @@ const nameRender = (stats: any) => {
                 <Badge>{snack}: </Badge>
 
                 <UnorderedList borderRadius="full" px="2" colorScheme="teal">
-                    {stats.todayData[snack].names.map((item) => (
-                        <ListItem>{item}</ListItem>
+                    {stats?.todayData[snack]?.names.map((item, idx) => (
+                        <ListItem key={idx}>{item}</ListItem>
                     ))}
                 </UnorderedList>
             </VStack>
@@ -174,7 +174,7 @@ export default function StatBar({ stats, isLoading }) {
                     <Spacer />
                     <VStack borderWidth="1px" borderRadius="lg" p={5}>
                         <Box fontWeight="semibold" as="h4" lineHeight="tight">
-                            Today's Names
+                            {"Today's Names"}
                         </Box>
 
                         <ModalNames stats={stats} />
