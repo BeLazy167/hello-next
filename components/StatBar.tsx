@@ -1,5 +1,25 @@
-import { Badge, Box, HStack, Spacer, VStack, Spinner } from "@chakra-ui/react";
+import {
+    Badge,
+    Box,
+    HStack,
+    Spacer,
+    VStack,
+    Spinner,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    Button,
+    ModalCloseButton,
+    useDisclosure,
+    Center,
+    UnorderedList,
+    ListItem,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { json } from "stream/consumers";
 // {
 //     "todayData": {
 //       "Missal Pav": {
@@ -11,6 +31,50 @@ import { useEffect, useState } from "react";
 //     },
 //     "length": 1
 //   }
+
+const nameRender = (stats: any) => {
+    let snackKeys = Object.keys(stats.todayData);
+
+    return snackKeys.map((snack, idx) => {
+        return (
+            <VStack key={idx} mt="1" lineHeight="tight">
+                <Badge>{snack}: </Badge>
+
+                <UnorderedList borderRadius="full" px="2" colorScheme="teal">
+                    {stats.todayData[snack].names.map((item) => (
+                        <ListItem>{item}</ListItem>
+                    ))}
+                </UnorderedList>
+            </VStack>
+        );
+    });
+};
+
+function ModalNames({ stats }) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    return (
+        <>
+            <Button onClick={onOpen}>open</Button>
+
+            <Modal isOpen={isOpen} onClose={onClose} scrollBehavior={"inside"}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader></ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>{nameRender(stats)}</ModalBody>
+
+                    <ModalFooter>
+                        <Center>
+                            <Button onClick={onClose}>Close</Button>
+                        </Center>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+        </>
+    );
+}
+
 export default function StatBar({ stats, isLoading }) {
     const [data, setData] = useState({});
     const [dx, setDx] = useState([]);
@@ -19,7 +83,6 @@ export default function StatBar({ stats, isLoading }) {
             setData(stats);
             setDx(Object.keys(stats?.["todayData"]));
         }
-        console.log(JSON.stringify(stats));
     }, [stats]);
 
     const renderX = () => {
@@ -60,13 +123,13 @@ export default function StatBar({ stats, isLoading }) {
                     <HStack mt={2} w="80%" mx="auto">
                         <Spacer />
                         <VStack p={4}>
-                            <Spinner/>
+                            <Spinner />
                         </VStack>
                         <Spacer />
                     </HStack>
                 </Box>
             </Box>
-        )
+        );
     }
 
     return (
@@ -111,16 +174,10 @@ export default function StatBar({ stats, isLoading }) {
                     <Spacer />
                     <VStack borderWidth="1px" borderRadius="lg" p={5}>
                         <Box fontWeight="semibold" as="h4" lineHeight="tight">
-                            Total Count
+                            Today's Names
                         </Box>
-                        <Badge
-                            variant="outline"
-                            borderRadius="full"
-                            px="2"
-                            colorScheme="teal"
-                        >
-                            300
-                        </Badge>
+
+                        <ModalNames stats={stats} />
                     </VStack>
                 </HStack>
             </Box>

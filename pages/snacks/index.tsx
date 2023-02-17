@@ -9,6 +9,8 @@ import {
     Text as ChakraText,
     VStack,
     useToast,
+    Link,
+    HStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -16,6 +18,7 @@ import Router from "next/router";
 import { useSession, getSession } from "next-auth/react";
 import cookie from "js-cookie";
 import { LoaderTwo } from "../../components/Loader";
+import { FcHome } from "react-icons/fc";
 async function upsertData(data: any) {
     const res = await fetch("/api/upsertData", {
         method: "POST",
@@ -174,9 +177,20 @@ export default function Page1() {
                                 renderOptions()
                             )}
                         </RadioGroup>
-                        <Button disabled={isDisabled} onClick={handleSubmit}>
-                            Submit
-                        </Button>
+                        <HStack>
+                            <Link href="/">
+                                <Button leftIcon={<FcHome />} variant="outline">
+                                    GoBack
+                                </Button>
+                            </Link>
+                            <Button
+                                disabled={isDisabled}
+                                onClick={handleSubmit}
+                                size={"lg"}
+                            >
+                                Submit
+                            </Button>
+                        </HStack>
                     </VStack>
                 </Center>
             </FormControl>

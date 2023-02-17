@@ -33,3 +33,18 @@ export function LoaderTwo() {
         />
     );
 }
+export function LoaderThree() {
+    return (
+        <Triangle
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="Triangle-loading"
+            wrapperStyle={{
+                display: "flex",
+                justifyContent: "center",
+            }}
+            color="#e15b64"
+        />
+    );
+}
