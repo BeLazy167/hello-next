@@ -27,6 +27,7 @@ import { QueryClient, useMutation, useQueries } from "@tanstack/react-query";
 import { getSession } from "next-auth/react";
 import StatBar from "../../components/StatBar";
 import TableX from "../../components/Table";
+import { LoaderThree } from "../../components/Loader";
 async function upsertData(data: any, url: string) {
     const res = await fetch(url, {
         method: "POST",
@@ -180,7 +181,18 @@ export default function Admin() {
             );
         });
     };
-
+    if (
+        userQueries[0].isLoading ||
+        userQueries[1].isLoading ||
+        userQueries[2].isLoading ||
+        userQueries[3].isLoading
+    ) {
+        return (
+            <Center mt={"10%"}>
+                <LoaderThree />
+            </Center>
+        );
+    }
     return (
         <div>
             <Center mb={10}>
@@ -262,14 +274,19 @@ export default function Admin() {
                     </Accordion>
                 )}
             </Center>
-            <Center>
-                <Heading mt={10} mb={5}>
-                    {"Today's Order Data"}
-                </Heading>
-            </Center>
-            <Center ml={20} mr={20}>
-                <TableX userData={userQueries[3]?.data} />
-            </Center>
+
+            {Object.keys(userQueries[3]?.data).length === 0 ? (
+                <Center mt={10}>
+                    <Heading>No Orders Today</Heading>
+                </Center>
+            ) : (
+                <Center ml={20} mr={20}>
+                    <Heading mt={10} mb={5}>
+                        {"Today's Order Data"}
+                    </Heading>
+                    <TableX userData={userQueries[3]?.data} />
+                </Center>
+            )}
         </div>
     );
 }
