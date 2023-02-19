@@ -28,6 +28,7 @@ import { getSession } from "next-auth/react";
 import StatBar from "../../components/StatBar";
 import TableX from "../../components/Table";
 import { LoaderThree } from "../../components/Loader";
+import DownloadCsv from "../../components/DownloadCsv";
 
 async function upsertData(data: any, url: string) {
     const res = await fetch(url, {
@@ -194,6 +195,10 @@ export default function Admin() {
             </Center>
         );
     }
+    let todatDateObj = new Date();
+    let todatDateChanged = ` ${todatDateObj.getDate()}/
+        ${String(todatDateObj.getMonth() + 1)}/
+        ${String(todatDateObj.getFullYear() - 1)}`;
     return (
         <Box h={"100vh"}>
             <Center mb={10}>
@@ -282,10 +287,16 @@ export default function Admin() {
                 </Center>
             ) : (
                 <Center ml={20} mr={20}>
-                    <Heading mt={10} mb={5}>
-                        {"Today's Order Data"}
-                    </Heading>
-                    <TableX userData={userQueries[3]?.data} />
+                    <VStack>
+                        <Heading mt={10} mb={5}>
+                            {"Today's Order Data"}
+                        </Heading>
+                        <DownloadCsv
+                            userData={userQueries[3]?.data}
+                            fileName={todatDateChanged}
+                        />
+                        <TableX userData={userQueries[3]?.data} />
+                    </VStack>
                 </Center>
             )}
         </Box>

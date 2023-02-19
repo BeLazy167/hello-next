@@ -39,8 +39,8 @@ export default function TableX({ userData }) {
             accessor: key,
         };
     });
-    const columns = useMemo(() => columnsNonMemo, []);
-    const data = useMemo(() => userData, []);
+    const columns = useMemo(() => columnsNonMemo, [userData]);
+    const data = useMemo(() => userData, [userData]);
 
     const {
         getTableProps,
