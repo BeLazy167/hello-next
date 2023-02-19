@@ -28,6 +28,7 @@ import { getSession } from "next-auth/react";
 import StatBar from "../../components/StatBar";
 import TableX from "../../components/Table";
 import { LoaderThree } from "../../components/Loader";
+
 async function upsertData(data: any, url: string) {
     const res = await fetch(url, {
         method: "POST",

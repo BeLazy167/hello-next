@@ -6,6 +6,7 @@ import { QueryClient, useQuery } from "@tanstack/react-query";
 import TableX from "../../components/Table";
 import AccountCard from "../../components/AccountCard";
 import HCard from "../../components/HCard";
+import DownloadCsv from "../../components/DownloadCsv";
 const client = new QueryClient();
 
 export default function Account() {
@@ -30,6 +31,7 @@ export default function Account() {
         ["user", session?.user?.email],
         getUserData
     );
+
     if (userDataLoading) {
         return (
             <Center mt={"20%"}>
@@ -43,7 +45,8 @@ export default function Account() {
             <HStack>
                 <AccountCard userData={userData} session={session} />
                 <VStack width={"100vw"}>
-                    {/* <HCard /> */}
+                    <HCard userData={userData} disabled={userDataLoading} />
+
                     <TableX userData={userData} />
                 </VStack>
             </HStack>
