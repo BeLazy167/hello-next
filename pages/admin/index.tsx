@@ -196,9 +196,7 @@ export default function Admin() {
         );
     }
     let todatDateObj = new Date();
-    let todatDateChanged = ` ${todatDateObj.getDate()}/
-        ${String(todatDateObj.getMonth() + 1)}/
-        ${String(todatDateObj.getFullYear() - 1)}`;
+    let todatDateChanged = `${todatDateObj.getDate()}-${String(todatDateObj.getMonth() + 1)}-${String(todatDateObj.getFullYear() - 1)}`;
     return (
         <Box h={"100vh"}>
             <Center mb={10}>

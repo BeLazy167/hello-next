@@ -52,15 +52,9 @@ export default function Custom() {
         setUserDataLoading(false);
     };
     let startDateObj = new Date(startDate);
-    let startDateChanged = `
-        ${startDateObj.getDate()}/
-        ${String(startDateObj.getMonth() + 1)}/
-        ${String(startDateObj.getFullYear() - 1)}
-        `;
+    let startDateChanged = `${startDateObj.getDate()}-${String(startDateObj.getMonth() + 1)}-${String(startDateObj.getFullYear() - 1)}`;
     let endDateObj = new Date(endDate);
-    let endDateChanged = ` ${endDateObj.getDate()}/
-        ${String(endDateObj.getMonth() + 1)}/
-        ${String(endDateObj.getFullYear() - 1)}`;
+    let endDateChanged = `${endDateObj.getDate()}-${String(endDateObj.getMonth() + 1)}-${String(endDateObj.getFullYear() - 1)}`;
 
     const final = useMemo(() => <TableX userData={userData} />, [userData]);
 
@@ -98,11 +92,11 @@ export default function Custom() {
                             userData={userData}
                             disabled={userDataLoading}
                             // set file name based on start and end date 19/02/2023-20/02/2023
-                            fileName={`${startDateChanged}-${endDateChanged}`}
+                            fileName={`${startDateChanged}_${endDateChanged}`}
                         />
                     </VStack>
                 </HStack>
-        
+
                 {userData && final}
             </VStack>
         </Center>
