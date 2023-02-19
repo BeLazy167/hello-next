@@ -195,7 +195,7 @@ export default function Admin() {
         );
     }
     return (
-        <div>
+        <Box h={"100vh"}>
             <Center mb={10}>
                 <Heading>Admin</Heading>
             </Center>
@@ -288,7 +288,7 @@ export default function Admin() {
                     <TableX userData={userQueries[3]?.data} />
                 </Center>
             )}
-        </div>
+        </Box>
     );
 }
 

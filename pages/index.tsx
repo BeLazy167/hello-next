@@ -15,7 +15,7 @@ export default function Home({ providers }) {
         return (
             <Flex
                 direction="column"
-                height="90vh"
+                height="100vh"
                 alignItems="center"
                 justifyContent="center"
             >
@@ -29,7 +29,7 @@ export default function Home({ providers }) {
         return (
             <Flex
                 direction="column"
-                height="90vh"
+                height="100vh"
                 alignItems="center"
                 justifyContent="center"
             >

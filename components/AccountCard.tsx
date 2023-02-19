@@ -16,11 +16,12 @@ export default function AccountCard({ userData, session }) {
     return (
         <Box
             minW={"300px"}
+            minH={"450px"}
             boxShadow={"2xl"}
             rounded={"md"}
             overflow={"hidden"}
-            ml={3}
-            mt={2}
+            ml={2}
+            mt={10}
             mb={"auto"}
         >
             <Image
