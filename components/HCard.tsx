@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import DownloadCsv from "./DownloadCsv";
 
-export default function HCard({ userData, disabled }) {
+export default function HCard({ userData, disabled, userName }) {
     //find fav snack and count using map
     let favSnack = userData.reduce((acc, curr) => {
         if (acc[curr.snack]) {
@@ -48,7 +48,11 @@ export default function HCard({ userData, disabled }) {
                     <StatNumber>{userData.length}</StatNumber>
                 </Stat>
             </StatGroup>
-            <DownloadCsv disabled={disabled} userData={userData} />
+            <DownloadCsv
+                disabled={disabled}
+                userData={userData}
+                fileName={userName}
+            />
         </HStack>
     );
 }

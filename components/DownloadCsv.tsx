@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/react";
 
-export default function DownloadCsv({ userData, disabled = false }) {
+export default function DownloadCsv({ userData, disabled = false, fileName }) {
     const downloadFile = ({ data, fileName, fileType }) => {
         // Create a blob with the data we want to download as a file
         const blob = new Blob([data], { type: fileType });
@@ -19,6 +19,16 @@ export default function DownloadCsv({ userData, disabled = false }) {
     };
 
     const exportToCsv = (e) => {
+        //if userData is empty or undefined return empty csv with no data header
+        if (!userData || !userData.length) {
+            downloadFile({
+                data: "",
+                fileName: `${fileName}.csv`,
+                fileType: "text/csv",
+            });
+            return;
+        }
+
         e.preventDefault();
         const replacer = (key, value) => (value === null ? "" : value); // specify how you want to handle null values here
         const header = Object.keys(userData[0]);
@@ -31,13 +41,14 @@ export default function DownloadCsv({ userData, disabled = false }) {
         csv = csv.join("\r");
         downloadFile({
             data: csv,
-            fileName: "users.csv",
+            fileName: `${fileName}.csv`,
             fileType: "text/csv",
         });
     };
+
     return (
         <Button
-            disabled={disabled}
+            disabled={disabled || !userData || !userData.length}
             onClick={exportToCsv}
             colorScheme="teal"
             variant="outline"
