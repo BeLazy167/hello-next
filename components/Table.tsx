@@ -168,9 +168,9 @@ export default function TableX({ userData }) {
                                 />
                             </Txt>{" "}
                         </Td>
-                        <Td w={"100%"}>
+                        <Td>
                             <Select
-                                w={"200px"}
+                                w={"20vw"}
                                 value={pageSize}
                                 onChange={(e) => {
                                     setPageSize(Number(e.target.value));
