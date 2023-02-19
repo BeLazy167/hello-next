@@ -200,7 +200,7 @@ export default function Admin() {
         ${String(todatDateObj.getMonth() + 1)}/
         ${String(todatDateObj.getFullYear() - 1)}`;
     return (
-        <div>
+        <Box h={"100vh"}>
             <Center mb={10}>
                 <Heading>Admin</Heading>
             </Center>
@@ -299,7 +299,7 @@ export default function Admin() {
                     </VStack>
                 </Center>
             )}
-        </div>
+        </Box>
     );
 }
 

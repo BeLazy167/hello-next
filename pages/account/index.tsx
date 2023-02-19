@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { useSession, getSession } from "next-auth/react";
-import { Center, HStack, VStack } from "@chakra-ui/react";
+import { Center, HStack, Stack, VStack } from "@chakra-ui/react";
 import { LoaderThree } from "../../components/Loader";
 import { QueryClient, useQuery } from "@tanstack/react-query";
 import TableX from "../../components/Table";
@@ -40,7 +40,7 @@ export default function Account() {
 
     if (session) {
         return (
-            <HStack>
+            <Stack direction={['column', 'row']} h={"100vh"} mt={5}>
                 <AccountCard userData={userData} session={session} />
                 <VStack width={"100vw"}>
                     <HCard
@@ -51,7 +51,7 @@ export default function Account() {
 
                     <TableX userData={userData} />
                 </VStack>
-            </HStack>
+            </Stack>
         );
     } else {
         return (

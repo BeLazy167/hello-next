@@ -1,4 +1,4 @@
-import { Box, HStack } from "@chakra-ui/react";
+import { Box, Flex, HStack, Stack } from "@chakra-ui/react";
 import {
     Stat,
     StatLabel,
@@ -26,8 +26,8 @@ export default function HCard({ userData, disabled, userName }) {
     let favSnackCount = Object.values(sortedUserData)[0] as any;
     let favSnackName = Object.keys(sortedUserData)[0];
     return (
-        <HStack spacing={10}>
-            <StatGroup fontWeight="semibold" letterSpacing="wide" minW={"20%"}>
+        <Stack direction={['column', 'row']} w={"100%"} alignItems={"center"} justify={"space-evenly"}>
+            <StatGroup  fontWeight="semibold" letterSpacing="wide" minW={"20%"} alignItems={"center"}>
                 <Stat shadow="md" borderWidth="1px" mr={10} p={5}>
                     <StatLabel>Favrouite Snack</StatLabel>
                     <StatNumber>{favSnackCount}</StatNumber>
@@ -53,6 +53,6 @@ export default function HCard({ userData, disabled, userName }) {
                 userData={userData}
                 fileName={userName}
             />
-        </HStack>
+        </Stack>
     );
 }
