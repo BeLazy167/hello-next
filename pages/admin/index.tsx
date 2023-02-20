@@ -7,10 +7,12 @@ import {
     Box,
     Button,
     Center,
+    Flex,
     Heading,
     HStack,
     Input,
     Select,
+    Stack,
     Switch,
     Table,
     TableContainer,
@@ -202,19 +204,19 @@ export default function Admin() {
             <Center mb={10}>
                 <Heading>Admin</Heading>
             </Center>
-            <Center mb={10}>
+            <Flex justify={"center"} mb={10}>
                 <StatBar
                     stats={userQueries[2]?.data}
                     isLoading={userQueries[2]?.isLoading}
                 />
-            </Center>
+            </Flex>
             <Center mb={5}>
-                <HStack width="55%">
+                <Stack direction={['column', 'row']} width="55%">
                     <Select
                         colorScheme="teal"
                         borderColor="teal.500"
                         name="day"
-                        width="15%"
+                        width="auto"
                         variant="outline"
                         isRequired
                         value={data.day}
@@ -238,7 +240,7 @@ export default function Admin() {
                     >
                         Set
                     </Button>
-                </HStack>
+                </Stack>
             </Center>
             <Center mb={5}>
                 <VStack>{renderNotiTable()}</VStack>
@@ -248,34 +250,36 @@ export default function Admin() {
                 {userQueries[0].isLoading ? (
                     <p>Loading...</p>
                 ) : (
-                    <Accordion allowToggle>
-                        <AccordionItem>
-                            <AccordionButton _expanded={{ color: "teal" }}>
-                                <Box flex="1" textAlign="center">
-                                    Current Snacks options
-                                </Box>
-                                <AccordionIcon />
-                            </AccordionButton>
+                    <Flex justify={"center"} w={"100vw"}>
+                        <Accordion w={"60vw"} allowToggle>
+                            <AccordionItem>
+                                <AccordionButton _expanded={{ color: "teal" }}>
+                                    <Box flex="1" textAlign="center">
+                                        Current Snacks options
+                                    </Box>
+                                    <AccordionIcon />
+                                </AccordionButton>
 
-                            <AccordionPanel pb={4}>
-                                <TableContainer
-                                    border="1px solid #e2e8f0"
-                                    borderRadius="5px"
-                                >
-                                    <Table size="sm">
-                                        <Thead>
-                                            <Tr>
-                                                <Th>Day</Th>
-                                                <Th>Snack</Th>
-                                                <Th>Updated On</Th>
-                                            </Tr>
-                                        </Thead>
-                                        <Tbody>{renderSnackTable()}</Tbody>
-                                    </Table>
-                                </TableContainer>
-                            </AccordionPanel>
-                        </AccordionItem>
-                    </Accordion>
+                                <AccordionPanel pb={4}>
+                                    <TableContainer
+                                        border="1px solid #e2e8f0"
+                                        borderRadius="5px"
+                                    >
+                                        <Table size="sm">
+                                            <Thead>
+                                                <Tr>
+                                                    <Th>Day</Th>
+                                                    <Th>Snack</Th>
+                                                    <Th>Updated On</Th>
+                                                </Tr>
+                                            </Thead>
+                                            <Tbody>{renderSnackTable()}</Tbody>
+                                        </Table>
+                                    </TableContainer>
+                                </AccordionPanel>
+                            </AccordionItem>
+                        </Accordion>
+                    </Flex>
                 )}
             </Center>
 
@@ -285,7 +289,7 @@ export default function Admin() {
                 </Center>
             ) : (
                 <Center ml={20} mr={20}>
-                    <VStack>
+                    <VStack w={"100vw"}>
                         <Heading mt={10} mb={5}>
                             {"Today's Order Data"}
                         </Heading>
