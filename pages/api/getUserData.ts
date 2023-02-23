@@ -46,6 +46,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             60
         );
 
+        console.log(`User: ${email}`);
         res.json(cachedAllData);
     }
 };

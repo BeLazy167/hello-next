@@ -121,7 +121,12 @@ export default function StatBar({ stats, isLoading }) {
                         </Box>
                     </Box>
                     <hr></hr>
-                    <Stack direction={['column', 'row']} mt={2} w="80%" mx="auto">
+                    <Stack
+                        direction={["column", "row"]}
+                        mt={2}
+                        w="80%"
+                        mx="auto"
+                    >
                         <Spacer />
                         <VStack p={4}>
                             <Spinner />
@@ -154,7 +159,7 @@ export default function StatBar({ stats, isLoading }) {
                     </Box>
                 </Box>
                 <hr></hr>
-                <Stack direction={['column', 'row']} mt={2} w="80%" mx="auto">
+                <Stack direction={["column", "row"]} mt={2} w="80%" mx="auto">
                     <VStack borderWidth="1px" borderRadius="lg" p={5}>
                         <Box fontWeight="semibold" as="h4" lineHeight="tight">
                             Total Count

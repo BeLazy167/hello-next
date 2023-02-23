@@ -31,6 +31,7 @@ import StatBar from "../../components/StatBar";
 import TableX from "../../components/Table";
 import { LoaderThree } from "../../components/Loader";
 import DownloadCsv from "../../components/DownloadCsv";
+import Link from "next/link";
 
 async function upsertData(data: any, url: string) {
     const res = await fetch(url, {
@@ -198,7 +199,9 @@ export default function Admin() {
         );
     }
     let todatDateObj = new Date();
-    let todatDateChanged = `${todatDateObj.getDate()}-${String(todatDateObj.getMonth() + 1)}-${String(todatDateObj.getFullYear() - 1)}`;
+    let todatDateChanged = `${todatDateObj.getDate()}-${String(
+        todatDateObj.getMonth() + 1
+    )}-${String(todatDateObj.getFullYear() - 1)}`;
     return (
         <Box h={"100vh"}>
             <Center mb={10}>
@@ -211,7 +214,7 @@ export default function Admin() {
                 />
             </Flex>
             <Center mb={5}>
-                <Stack direction={['column', 'row']} width="55%">
+                <Stack direction={["column", "row"]} width="55%">
                     <Select
                         colorScheme="teal"
                         borderColor="teal.500"
@@ -293,10 +296,18 @@ export default function Admin() {
                         <Heading mt={10} mb={5}>
                             {"Today's Order Data"}
                         </Heading>
-                        <DownloadCsv
-                            userData={userQueries[3]?.data}
-                            fileName={todatDateChanged}
-                        />
+                        <HStack>
+                            <DownloadCsv
+                                userData={userQueries[3]?.data}
+                                fileName={todatDateChanged}
+                            />
+                            {/* get custom date range data on route /admin/custom */}
+                            <Button colorScheme="teal" variant="link">
+                                <Link href="/admin/custom">
+                                    Custom Date Range
+                                </Link>
+                            </Button>
+                        </HStack>
                         <TableX userData={userQueries[3]?.data} />
                     </VStack>
                 </Center>

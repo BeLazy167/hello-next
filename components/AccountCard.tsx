@@ -25,6 +25,7 @@ export default function AccountCard({ userData, session }) {
             mb={"auto"}
         >
             <Image
+                alt={"backgroundImage"}
                 h={"120px"}
                 w={"full"}
                 src={

@@ -31,42 +31,9 @@ function StatsCard(props: StatsCardProps) {
 
 export default function BasicStatistics() {
     const { data: allData, isLoading } = useQuery(
-        ["allData"],
-        async () => await fetcher("/api/allData")
+        ["allDataStats"],
+        async () => await fetcher("/api/agg")
     );
-
-    const sorter = (toSort: any) => {
-        const Sorted = Object.entries(toSort)
-            .sort(([, a]: any, [, b]: any) => b - a)
-            .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-        return Sorted;
-    };
-    const getAllUniqueName = () => {
-        const nameDataAll = {};
-        allData?.map((ele: any) => {
-            if (nameDataAll[ele.name]) {
-                nameDataAll[ele.name] += 1;
-            } else {
-                nameDataAll[ele.name] = 1;
-            }
-        });
-        return sorter(nameDataAll);
-    };
-    const getAllUniqueSnack = () => {
-        const snackDataAll = {};
-        allData?.map((ele: any) => {
-            if (snackDataAll[ele.snack] === undefined) {
-                snackDataAll[ele.snack] = 1;
-            } else {
-                snackDataAll[ele.snack] = snackDataAll[ele.snack] + 1;
-            }
-        });
-        return sorter(snackDataAll);
-    };
-    const uniqueSnacksData = getAllUniqueSnack();
-    const uniqueNameData = getAllUniqueName();
-    const uniqueUsers = Object.keys(uniqueNameData).length;
-    const uniqueSnack = Object.keys(uniqueSnacksData).length;
 
     return (
         <Box maxW="7xl" mx={"auto"} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
@@ -78,20 +45,20 @@ export default function BasicStatistics() {
                     title={"We served"}
                     isLoading={isLoading}
                     // stat={`${allData?.length || 0} times`}
-                    stat={allData?.length}
+                    stat={allData?.count}
                     secondTitle={"times"}
                 />
                 <StatsCard
                     isLoading={isLoading}
                     title={"To"}
                     // stat={`${uniqueUsers} distinct users`}
-                    stat={uniqueUsers}
+                    stat={allData?.distinctUser}
                     secondTitle={"distinct users"}
                 />
                 <StatsCard
                     isLoading={isLoading}
                     title={"With over"}
-                    stat={uniqueSnack}
+                    stat={allData?.disitinctSnack}
                     secondTitle={"unique snacks"}
                 />
             </SimpleGrid>
@@ -104,8 +71,8 @@ const fetcher = async (u: string) =>
 
 export async function getStaticProps() {
     await client.prefetchQuery(
-        ["allData"],
-        async () => await fetcher("/api/allData")
+        ["allDataStats"],
+        async () => await fetcher("/api/agg")
     );
     return {
         revalidate: 30,
@@ -114,3 +81,37 @@ export async function getStaticProps() {
         },
     };
 }
+
+//previously used LOGIC LOL
+// const sorter = (toSort: any) => {
+//     const Sorted = Object.entries(toSort)
+//         .sort(([, a]: any, [, b]: any) => b - a)
+//         .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+//     return Sorted;
+// };
+// const getAllUniqueName = () => {
+//     const nameDataAll = {};
+//     allData?.map((ele: any) => {
+//         if (nameDataAll[ele.name]) {
+//             nameDataAll[ele.name] += 1;
+//         } else {
+//             nameDataAll[ele.name] = 1;
+//         }
+//     });
+//     return sorter(nameDataAll);
+// };
+// const getAllUniqueSnack = () => {
+//     const snackDataAll = {};
+//     allData?.map((ele: any) => {
+//         if (snackDataAll[ele.snack] === undefined) {
+//             snackDataAll[ele.snack] = 1;
+//         } else {
+//             snackDataAll[ele.snack] = snackDataAll[ele.snack] + 1;
+//         }
+//     });
+//     return sorter(snackDataAll);
+// };
+// const uniqueSnacksData = getAllUniqueSnack();
+// const uniqueNameData = getAllUniqueName();
+// const uniqueUsers = Object.keys(uniqueNameData).length;
+// const uniqueSnack = Object.keys(uniqueSnacksData).length;

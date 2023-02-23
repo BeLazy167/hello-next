@@ -55,7 +55,7 @@ function filer(stats: any) {
             objf[each.snack]["count"] += 1;
         }
     });
-    console.log(objf);
+
     return objf;
 }
 

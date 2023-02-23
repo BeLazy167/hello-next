@@ -4,6 +4,7 @@ import Loader from "../components/Loader";
 import { useSession, getProviders, getSession } from "next-auth/react";
 import BasicStatistics from "./stats";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 const SignIn = dynamic(() => import("../components/SignIn"), {
     loading: () => <Loader />,
 });

@@ -70,10 +70,12 @@ export default function Page1() {
     });
 
     useEffect(() => {
-        setData({
-            ...data,
-            name: session?.user?.name,
-            email: session?.user?.email,
+        setData((data) => {
+            return {
+                ...data,
+                name: session?.user?.name,
+                email: session?.user?.email,
+            };
         });
     }, [session]);
 
