@@ -263,7 +263,7 @@ export default function Admin() {
                                     <AccordionIcon />
                                 </AccordionButton>
 
-                                <AccordionPanel pb={4}>
+                                                                             <AccordionPanel pb={4}>
                                     <TableContainer
                                         border="1px solid #e2e8f0"
                                         borderRadius="5px"
@@ -313,6 +313,7 @@ export default function Admin() {
                 </Center>
             )}
         </Box>
+
     );
 }
 
@@ -342,3 +343,6 @@ export const getServerSideProps = async (context) => {
         },
     };
 };
+
+
+

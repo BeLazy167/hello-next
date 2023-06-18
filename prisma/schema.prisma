@@ -1,33 +1,58 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// Define the Prisma Client generator
 generator client {
   provider = "prisma-client-js"
 }
 
+// Define the database configuration
 datasource db {
   provider          = "postgresql"
   url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
+// Define the User model
 model User {
-  id        String   @id @default(cuid())
+  // Unique identifier for the user
+  id String @id @default(cuid())
+
+  // Timestamp for when the user was created
   createdAt DateTime @default(now()) @map("updated_at")
+
+  // Timestamp for when the user was last updated
   updatedAt DateTime @updatedAt @map("created_at")
-  name      String
-  email     String
-  snack     String
+
+  // Name of the user
+  name String
+
+  // Email of the user
+  email String
+
+  // Favorite snack of the user
+  snack String
 }
 
+// Define the Snack model
 model Snack {
-  id        String   @id @default(cuid())
+  // Unique identifier for the snack
+  id String @id @default(cuid())
+
+  // Timestamp for when the snack was created
   createdAt DateTime @default(now()) @map("updated_at")
+
+  // Timestamp for when the snack was last updated
   updatedAt DateTime @updatedAt @map("created_at")
-  snack     String[]
-  day       Day      @unique
+
+  // Array of snacks available
+  snack String[]
+
+  // Day of the week for the snack availability
+  day Day @unique
 }
 
+// Define the enum for the days of the week
 enum Day {
   MONDAY
   TUESDAY
@@ -36,11 +61,23 @@ enum Day {
   FRIDAY
 }
 
+// Define the Notification model
 model Notification {
-  id        String   @id @default(cuid())
+  // Unique identifier for the notification
+  id String @id @default(cuid())
+
+  // Timestamp for when the notification was created
   createdAt DateTime @default(now()) @map("updated_at")
+
+  // Timestamp for when the notification was last updated
   updatedAt DateTime @updatedAt @map("created_at")
-  toSend    Boolean  @default(true)
-  taskId    Int
-  task      String
+
+  // Boolean flag to determine if the notification should be sent
+  toSend Boolean @default(true)
+
+  // Identifier for the associated task
+  taskId Int
+
+  // Description of the task
+  task String
 }
